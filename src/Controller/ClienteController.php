@@ -16,7 +16,6 @@ use App\Entity\Cliente;
  */
 class ClienteController extends AbstractController
 {
-
     /**
     * @param EntityManagerInterface $entityManager
     */
