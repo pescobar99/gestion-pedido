@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" crossorigin="anonymous">
+{% endblock %}
+
+{% block title %}Listado Pedidos{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="col-sm-12">
+            <table id="tabla_pedidos" class="display">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Producto</th>
+                        <th>Importe</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pedido in pedidos %}
+                        <tr>
+                            <td>{{pedido.cliente.nombre}}</td>
+                            <td></td>
+                            <td>{{pedido.importe}}</td>
+                            <td>
+                                <a href="{{ path('editar_pedido', { id_pedido: pedido.id }) }}">Editar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table> 
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        jQuery(document).ready( function () {
+            jQuery('#tabla_pedidos').DataTable();
+        });
+    </script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+{% endblock %}

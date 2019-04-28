@@ -99,6 +99,13 @@ class Pedido
         return $this;
     }
 
+    public function setProductos(Producto $productos)
+    {
+        $this->productos = $productos;
+    
+        return $this;
+    }
+
     public function getCliente(): ?Cliente
     {
         return $this->cliente;

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pedido{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="col-sm-12 blog-main">
+            {{ form_start(form) }}
+            <div class="form-group col-sm-4">
+                {{ form_row(form.cliente) }}
+            </div>
+            <div class="form-group col-sm-4">
+                {{ form_row(form.importe) }}
+            </div>
+            <div class="form-group col-sm-4" id="pedidoproducto_list" data-prototype="{{ form_widget(form.productos.vars.prototype)|e('html_attr') }}">
+                {% for row in form.productos %}
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <strong>{{ row.vars.value.title }}</strong>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_row(row) }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group col-sm-4 pull-right">
+                {{ form_row(form.submit) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/app.js') }}"></script>
+{% endblock %}
