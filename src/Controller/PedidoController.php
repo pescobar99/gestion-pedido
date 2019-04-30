@@ -39,6 +39,8 @@ class PedidoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $pedido = $form->getData();
 
+            $pedido->setFechaCreacion(new \DateTime());
+
             $this->entityManager->persist($pedido);
             $this->entityManager->flush($pedido);
     
@@ -67,14 +69,13 @@ class PedidoController extends AbstractController
      */
     public function editarAction(Request $request, $id_pedido)
     {
-        $pedido = $this->clienteRepository->find($id_pedido);
+        $pedido = $this->pedidoRepository->find($id_pedido);
 
         $form = $this->createForm(PedidoFormType::class, $pedido);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $pedido->setImporte($data->getImporte());
+            $pedido = $form->getData();
 
             $this->entityManager->persist($pedido);
             $this->entityManager->flush($pedido);

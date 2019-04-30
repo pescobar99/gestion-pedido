@@ -25,9 +25,6 @@
             <div class="form-group col-sm-4" id="pedidoproducto_list" data-prototype="{{ form_widget(form.productos.vars.prototype)|e('html_attr') }}">
                 {% for row in form.productos %}
                     <div class="panel panel-warning">
-                        <div class="panel-heading">
-                            <strong>{{ row.vars.value.title }}</strong>
-                        </div>
                         <div class="panel-body">
                             {{ form_row(row) }}
                         </div>
