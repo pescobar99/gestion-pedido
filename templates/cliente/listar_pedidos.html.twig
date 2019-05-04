@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" crossorigin="anonymous">
 {% endblock %}
 
-{% block title %}Listado Clientes{% endblock %}
+{% block title %}Listado Pedidos{% endblock %}
 
 {% block body %}
     <div class="row">
@@ -18,26 +18,27 @@
             {% endfor %}
         </div>
         <div class="col-sm-12">
-            <table id="tabla_clientes" class="display">
+            <h2>Cliente: {{cliente.nombre}}</h2>
+            <table id="tabla_cliente_pedidos" class="display">
                 <thead>
                     <tr>
-                        <th>Cliente</th>
-                        <th>Acciones</th>
+                        <th>Productos</th>
+                        <th>Importe</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for cliente in clientes %}
+                    {% for pedido in cliente.pedidos %}
                         <tr>
-                            <td>{{cliente.nombre}}</td>
                             <td>
-                                <a href="{{ path('editar_cliente', { id_cliente: cliente.id }) }}">Editar</a>
-                                |
-                                <a href="{{ path('listar_pedido_cliente', { id_cliente: cliente.id }) }}">Ver Pedidos</a>
+                                {% for producto in pedido.productos %}
+                                    {{producto.nombre}},
+                                {% endfor %}
                             </td>
+                            <td>{{pedido.importe}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
-            </table> 
+            </table>
         </div>
     </div>
 {% endblock %}
@@ -45,7 +46,7 @@
 {% block javascripts %}
     <script type="text/javascript">
         jQuery(document).ready( function () {
-            jQuery('#tabla_clientes').DataTable();
+            jQuery('#tabla_cliente_pedidos').DataTable();
         });
     </script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>

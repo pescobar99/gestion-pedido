@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Web;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ClienteFormType;
 use App\Entity\Cliente;
-
+use GuzzleHttp\Client;
 
 /**
  * @Route("/cliente", name="")
@@ -23,6 +23,7 @@ class ClienteController extends AbstractController
     {
         $this->entityManager = $entityManager;
         $this->clienteRepository = $entityManager->getRepository('App:Cliente');
+        $this->http_client = new Client();
     }
 
     /**
@@ -85,6 +86,18 @@ class ClienteController extends AbstractController
 
         return $this->render('/cliente/cliente.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/{id_cliente}/pedidos", name="listar_pedido_cliente")
+     */
+    public function getPedidoCliente($id_cliente) {
+        $response = $this->http_client->request('GET', "http://gestion-pedidos.local/api/clientes/$id_cliente");
+        $cliente = json_decode($response->getBody()->getContents());
+        
+        return $this->render('/cliente/listar_pedidos.html.twig', [
+            'cliente' => $cliente[0]
         ]);
     }
 }
